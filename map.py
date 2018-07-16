@@ -29,7 +29,7 @@ class Map:
         map_copy[posy] = "".join(map_copy[posy])
         new_map = ""
         for i in range(radiusy_start, radiusy_end):
-            new_map += 10 * " " + str(map_copy[i][radiusx_start:radiusx_end]) + "\n"
+            new_map += 10 * " " + "|" + str(map_copy[i][radiusx_start:radiusx_end]) + "|\n"
         self.map_show = new_map
 
     def __str__(self):
@@ -39,8 +39,10 @@ class Map:
 class Player:
     def __init__(self, name, posx, posy):
         self.name = name
-        self.posx = posx
-        self.posy = posy
+        self.posx = 2
+        self.posy = 2
+        self.key = False
+        self.thirst = 100
 
     def change_pos(self, newposx, newposy):
         self.posx = newposx
@@ -75,18 +77,27 @@ def arrows_move(posx, posy, char):  # moving in menu
     return posx + arrows_lr[char], posy + arrows_ud[char]
 
 
-game = Map(5, "map1.txt")
+game = Map(120, "map1.txt")
 posx = 2
 posy = 2
-pipi = Player("pipi", posx, posy)
+gamer = Player("kamil", posx, posy)
 game.map_load(posx, posy)
 
-while True:
+
+def print_game_window(game):
     cls()
-    print(game)
+    print("\n"*5)
+    length_window_game = len(game.map_show.split("\n")[0]) - 12
+    print(10 * " ",  length_window_game * "-")
+    print(game, end="")
+    print(10 * " ", length_window_game * "-")
+
+
+while True:
+    print_game_window(game)
     char = getChar(1)
     if(char == "\x1b"):
         char = getChar(2)
         posx, posy = arrows_move(posx, posy, char)
-        pipi.change_pos(posx, posy)
+        gamer.change_pos(posx, posy)
         game.map_load(posx, posy)
