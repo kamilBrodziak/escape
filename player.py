@@ -28,8 +28,5 @@ class Player:
         if self.sword == mob.prone:
             mob.health -= self.attack
 
-    def inventory_add(self):
-        pass
-
-    def inventory_equip(self):
-        pass
+    # def chest_encountered(self, inv):
+    #     inv.add_to_inv("items.txt", 20)

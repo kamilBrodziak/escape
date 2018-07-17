@@ -49,6 +49,10 @@ class Map:
         else:
             self.ascii_map = self.replace_char_in_string(" ", posx, posy)
 
+    def change_map(self, filename):
+        with open(filename) as mapfile:
+            self.ascii_map = mapfile.read().splitlines()
+
     def __str__(self):
         cls()
         length_window_game = len(self.map_show.split("\n")[0]) - 12
