@@ -1,7 +1,7 @@
 import sys
 import os
-import threading
 import time
+from termcolor import colored
 
 
 def cls():  # clearing screen in terminal
@@ -17,7 +17,7 @@ class Map:
         with open(filename) as mapfile:
             self.ascii_map = mapfile.read().splitlines()
 
-    def change_radius(new_radius):
+    def change_radius(self, new_radius):
         self.radius = new_radius
 
     def map_load(self, posx, posy):
@@ -26,14 +26,28 @@ class Map:
             len(self.ascii_map[0])
         radiusy_start = posy - self.radius if posy - self.radius >= 0 else 0
         radiusy_end = posy + self.radius if posy + self.radius <= len(self.ascii_map) else len(self.ascii_map)
-        map_copy = self.ascii_map[:]
-        map_copy[posy] = list(map_copy[posy])
-        map_copy[posy][posx] = "@"
-        map_copy[posy] = "".join(map_copy[posy])
+        map_copy = self.replace_char_in_string(colored("@", "blue"), posx, posy)
         new_map = ""
         for i in range(radiusy_start, radiusy_end):
-            new_map += 10 * " " + "|" + str(map_copy[i][radiusx_start:radiusx_end]) + "|\n"
+            radiusx_end_copy = radiusx_end if i != posy else radiusx_end + len(colored("@", "blue")) - 1
+            new_map += 10 * " " + "|" + map_copy[i][radiusx_start:radiusx_end_copy] + "|\n"
         self.map_show = new_map
+        special_signs = {'G': colored("G", "yellow"), 'O': colored("O", "yellow", attrs=["dark"]), 'B': colored("B", "red"), '$': colored('$', 'green')}
+        for i in special_signs.keys():
+            self.replace_char(i, special_signs[i])
+
+    def replace_char_in_string(self, new, posx, posy):
+        map_copy = self.ascii_map[:]
+        map_copy[posy] = list(map_copy[posy])
+        map_copy[posy][posx] = new
+        map_copy[posy] = "".join(map_copy[posy])
+        return map_copy
+
+    def replace_char(self, old, new, posx=None, posy=None):
+        if posx is None or posy is None:
+            self.map_show = self.map_show.replace(old, new)
+        else:
+            self.ascii_map = self.replace_char_in_string(" ", posx, posy)
 
     def __str__(self):
         return self.map_show
@@ -60,6 +74,9 @@ class Player:
     def change_pos(self, newposx, newposy):
         self.posx = newposx
         self.posy = newposy
+
+    def enemy_encountered(self, game):
+        pass
 
     def attack_mob(self, mob):
         mob.health -= self.attack
@@ -113,12 +130,15 @@ def arrows_move(posx, posy, char, game):  # moving in menu
         posy + arrows_ud[char] < 0 or posy + arrows_ud[char] > len(game.ascii_map) - 1 or \
             game.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "#":
         return posx, posy
+    elif game.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "$":
+        pass
+    elif game.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] in {'O', 'G', 'B'}:
+        pass
     return posx + arrows_lr[char], posy + arrows_ud[char]
 
 
 def print_game_window(game, gamer):
     cls()
-    print(gamer.thirst)
     print("\n"*5)
     length_window_game = len(game.map_show.split("\n")[0]) - 12
     print(10 * " ",  length_window_game * "-")
@@ -126,15 +146,19 @@ def print_game_window(game, gamer):
     print(10 * " ", length_window_game * "-")
 
 
-def test(gamer, run_event):
+def test(gamer):
     while run_event.is_set():
-        time.sleep(1)
+        print(gamer.thirst)
+        sys.stdout.write("\033[F")
+        time.sleep(0.4)
+        sys.stdout.write("\033[K")
         gamer.thirst -= 1
     return
 
 
-def gamestart(gamer, game, posx, posy, run_event):
-    while run_event.is_set():
+def gamestart(gamer, game, posx, posy):
+    special_chars = {'O', 'G', 'B', '$'}
+    while True:
         print_game_window(game, gamer)
         char = getChar(1)
         if char == "\x1b":
@@ -142,8 +166,11 @@ def gamestart(gamer, game, posx, posy, run_event):
             posx, posy = arrows_move(posx, posy, char, game)
             gamer.change_pos(posx, posy)
             game.map_load(posx, posy)
-        elif char == "i":
+        elif char == "\n":
             pass
+        if game.ascii_map[posy][posx] in special_chars:
+            gamer.enemy_encountered(game)
+            game.replace_char(game.ascii_map[posy][posx], " ", posx, posy)
     return
 
 
@@ -153,20 +180,7 @@ def main():
     posy = 2
     gamer = Player("kamil", posx, posy)
     game.map_load(posx, posy)
-    run_event = threading.Event()
-    run_event.set()
-    t2 = threading.Thread(target=test, args=(gamer, run_event, ))
-    t1 = threading.Thread(target=gamestart, args=(gamer, game, posx, posy, run_event))
-    t1.start()
-    t2.start()
-    try:
-        while 1:
-            time.sleep(.1)
-    except KeyboardInterrupt:
-        run_event.clear()
-        t1.join()
-        t2.join()
-        return
+    gamestart(gamer, game, posx, posy)
 
 
 main()
