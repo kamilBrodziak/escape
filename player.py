@@ -1,20 +1,25 @@
+from common import cls, getChar, Printing
+from termcolor import cprint
+
+
 class Player:
     def __init__(self, name, posx, posy):
         self.name = name
         self.posx = 2
         self.posy = 2
         self.key = False
-        self.thirst = 100
         self.hunger = 100
-        self.attack = 10
-        self.sword = 0
-        self.boots = 0
-        self.chest = 0
-        self.pants = 0
-        self.helmet = 0
-        self.defence = self.boots + self.pants + self.chest + self.helmet
-        self.life = 100
+        self.equiped = {'boots': 0, 'chest': 0, 'shoulder': 0, 'gloves': 0, 'helmet': 0, 'sword': 0, 'light': 0}
+        self.update_stats()
         self.inventory = {}
+        self.printing = Printing([20, 40], 61, "Stats")
+        with open("banner.txt") as filename:
+            ascii_character = filename.read()
+
+    def update_stats(self):
+        self.stats = {'defence': self.equiped['boots'] + self.equiped['chest'] + self.equiped['shoulder'] +
+                      self.equiped['gloves'] + self.equiped['helmet'], 'attack': 10 + self.equiped['sword'],
+                      'radius': 5 + self.equiped['light'], 'hunger': self.hunger}
 
     def change_pos(self, newposx, newposy):
         self.posx = newposx
@@ -28,5 +33,18 @@ class Player:
         if self.sword == mob.prone:
             mob.health -= self.attack
 
-    # def chest_encountered(self, inv):
-    #     inv.add_to_inv("items.txt", 20)
+    def run_statistic(self):
+        char = ""
+        while char.lower() != 'c':
+            cls()
+            self.print_stats()
+            char = getChar(1)
+            if char == '\x1b':
+                getChar(2)
+
+    def print_stats(self):
+        self.printing.print_title()
+        self.printing.print_row(["Stat", "Value"], header=True)
+        for stat in self.stats:
+            self.printing.print_row([stat, self.stats[stat]])
+        cprint("|" + self.printing.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])

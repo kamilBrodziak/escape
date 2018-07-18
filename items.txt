@@ -1,3 +1,4 @@
+0;light;5; torch ; +5 to view 
 1;light;5; torch ; +5 to view 
 2;light;5; torch ; +5 to view 
 3;light;5; torch ; +5 to view 
@@ -7,10 +8,10 @@
 7;light;5; torch ; +5 to view 
 8;light;5; torch ; +5 to view 
 9;light;5; torch ; +5 to view 
-10;light;5; torch ; +5 to view 
-11;light;5; torch ; +5 to view 
-12;light;5; torch ; +5 to view 
-13;light;5; torch ; +5 to view 
+10;hunger;5; stek ; +5 to view 
+11;hunger;5; corn ; +5 to view 
+12;hunger;5; rabarbar ; +5 to view 
+13;hunger;5; fish ; +5 to view 
 14;light;5; torch ; +5 to view 
 15;light;5; torch ; +5 to view 
 16;light;5; torch ; +5 to view 

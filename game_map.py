@@ -12,20 +12,18 @@ def cls():  # clearing screen in terminal
 
 
 class Map:
-    def __init__(self, radius, filename):
-        self.radius = radius
+    def __init__(self, gamer, filename):
+        self.gamer = gamer
         with open(filename) as mapfile:
             self.ascii_map = mapfile.read().splitlines()
 
-    def change_radius(self, new_radius):
-        self.radius = new_radius
-
     def map_load(self, posx, posy):
-        radiusx_start = posx - 2 * self.radius if posx - 2 * self.radius >= 0 else 0
-        radiusx_end = posx + 2 * self.radius if posx + 2 * self.radius <= len(self.ascii_map[0]) else \
+        radius = self.gamer.stats['radius']
+        radiusx_start = posx - 2 * radius if posx - 2 * radius >= 0 else 0
+        radiusx_end = posx + 2 * radius if posx + 2 * radius <= len(self.ascii_map[0]) else \
             len(self.ascii_map[0])
-        radiusy_start = posy - self.radius if posy - self.radius >= 0 else 0
-        radiusy_end = posy + self.radius if posy + self.radius <= len(self.ascii_map) else len(self.ascii_map)
+        radiusy_start = posy - radius if posy - radius >= 0 else 0
+        radiusy_end = posy + radius if posy + radius <= len(self.ascii_map) else len(self.ascii_map)
         map_copy = self.replace_char_in_string(colored("@", "blue"), posx, posy)
         new_map = ""
         for i in range(radiusy_start, radiusy_end):
