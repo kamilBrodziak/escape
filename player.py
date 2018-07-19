@@ -4,22 +4,21 @@ from termcolor import cprint
 
 class Player:
     def __init__(self, name, posx, posy):
+        self.score = 0
         self.name = name
         self.posx = 2
         self.posy = 2
         self.key = False
-        self.hunger = 100
+        self.hunger = 100.0
         self.equiped = {'boots': 0, 'chest': 0, 'shoulder': 0, 'gloves': 0, 'helmet': 0, 'sword': 0, 'light': 0}
         self.update_stats()
         self.inventory = {}
         self.printing = Printing([20, 40], 61, "Stats")
-        with open("banner.txt") as filename:
-            ascii_character = filename.read()
 
     def update_stats(self):
         self.stats = {'defence': self.equiped['boots'] + self.equiped['chest'] + self.equiped['shoulder'] +
                       self.equiped['gloves'] + self.equiped['helmet'], 'attack': 10 + self.equiped['sword'],
-                      'radius': 5 + self.equiped['light'], 'hunger': self.hunger}
+                      'radius': 5 + self.equiped['light'], 'hunger': round(self.hunger, 1)}
 
     def change_pos(self, newposx, newposy):
         self.posx = newposx

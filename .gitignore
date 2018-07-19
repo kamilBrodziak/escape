@@ -1,2 +1,6 @@
 __pycache__/*
+games/__pycache__/*
+games/hangman/__pycache__/*
+games/tictactoe/__pycache__/*
+games/hotcold/__pycache__/*
 testing.py

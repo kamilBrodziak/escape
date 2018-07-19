@@ -16,7 +16,7 @@ class Inv:
 
         self.gamer = gamer
         self.items_per_page = items_per_page
-        self.display_inv = DisplayInv(self.inventory, self.items_per_page, self.gamer.equiped)
+        self.display_inv = DisplayInv(self.inventory, self.items_per_page, self.gamer.equiped, self.gamer)
         self.actual_pos = 0  # actual position of our cursor in inventory
         self.actual_page = 1
 
@@ -79,10 +79,10 @@ class Inv:
                 self.equip(item_type, value)
                 self.display_inv.change_names_equiped(self.temp_equiped[item_type])
             elif item_type == "hunger":
-                self.gamer.hunger += int(value)
+                self.gamer.hunger += float(value)
                 self.change_item_amount()
                 if self.gamer.hunger > 100:
-                    self.gamer.hunger = 100
+                    self.gamer.hunger = 100.0
             self.gamer.update_stats()
 
     def equip(self, item_type, value):
@@ -123,7 +123,8 @@ class Inv:
 
 
 class DisplayInv:
-    def __init__(self, inventory, items_per_page, equiped):
+    def __init__(self, inventory, items_per_page, equiped, gamer):
+        self.gamer = gamer
         self.inv = inventory
         self.title = 'Inventory'
         self.headings = ['Name', 'Description', 'Amount']
@@ -167,7 +168,8 @@ class DisplayInv:
         string = "|"
         for el in self.stats:
             string += " " + el + ": " + str(self.stats[el]) + " |"
-        string = string[:-1] + (self.table_length - len(string) + 2) * " " + "|"
+        string += " key: " + str(self.gamer.key)
+        string = string + (self.table_length - len(string) + 1) * " " + "|"
         cprint(string, "white", "on_grey", attrs=['bold'])
         cprint("|" + self.table_length * "_" + "|", "white", "on_grey", attrs=['bold'])
 

@@ -14,7 +14,7 @@ def cls():  # clearing screen in terminal
 class Map:
     def __init__(self, gamer, filename):
         self.gamer = gamer
-        with open(filename) as mapfile:
+        with open("ascii/" + filename) as mapfile:
             self.ascii_map = mapfile.read().splitlines()
 
     def map_load(self, posx, posy):

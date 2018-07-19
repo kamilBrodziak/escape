@@ -2,8 +2,9 @@ import player
 import game_map
 import mobs
 import inventory
-from common import getChar, arrows_move
+from common import getChar, arrows_move, cls
 import time
+import levels_game
 
 
 def gamestart(gamer, map_, posx, posy):
@@ -16,8 +17,12 @@ def gamestart(gamer, map_, posx, posy):
         char = getChar(1)
         if char == "\x1b":
             char = getChar(2)
+            oldpos = [posx, posy]
             posx, posy = arrows_move(gamer.posx, gamer.posy, char, map_)
             gamer.change_pos(posx, posy)
+            if [posx, posy] != oldpos:
+                gamer.hunger -= 1/5
+                gamer.update_stats()
             map_.map_load(posx, posy)
         elif char == "\n":
             pass
@@ -34,10 +39,20 @@ def gamestart(gamer, map_, posx, posy):
             elif actual_chunk == chest:
                 inv.add_rand("items.txt", 40)
         elif actual_chunk in levels and gamer.key:
-            gamer.key = False
             gamer.change_pos(2, 2)
-            map_.change_map("map" + actual_chunk + ".txt")
-            map_.map_load(2, 2)
+            result, score = levels_game.main(actual_chunk)
+            if result:
+                gamer.score -= score
+                gamer.key = False
+                map_.change_map("ascii/map" + actual_chunk + ".txt")
+                map_.map_load(2, 2)
+            else:
+                gamer.score -= 20
+            cls()
+            with open("ascii/next_level" + str(result) + ".txt") as filename:
+                    print(filename.read())
+            time.sleep(3)
+
     return
 
 
