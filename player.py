@@ -1,4 +1,4 @@
-from common import cls, getChar, Printing
+from common import getChar, Printing, cls
 from termcolor import cprint
 
 
