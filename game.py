@@ -52,6 +52,8 @@ def gamestart(gamer, map_, posx, posy):
             with open("ascii/next_level" + str(result) + ".txt") as filename:
                     print(filename.read())
             time.sleep(3)
+            if actual_chunk == 4:
+                return
 
     return
 

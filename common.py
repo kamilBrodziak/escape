@@ -71,9 +71,9 @@ def arrows_move(posx, posy, char, map_):  # moving in menu/game
     arrows_lr = {"[A": 0, "[B": 0, "[C": 1, "[D": -1}  # left right
     if posx + arrows_lr[char] < 0 or posx + arrows_lr[char] > len(map_.ascii_map[0]) - 1 or \
         posy + arrows_ud[char] < 0 or posy + arrows_ud[char] > len(map_.ascii_map) - 1 or \
-            map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "#":
+            map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "█":
         return posx, posy
-    elif map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "$":
+    elif map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "⛁":
         pass
     elif map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] in {'O', 'G', 'B'}:
         pass

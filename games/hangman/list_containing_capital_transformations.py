@@ -23,10 +23,10 @@ def delete_spaces_in_capital_display_on_screen(capital, capital_display_on_scree
             j += 1
 
 
-def add_letter_to_capital_display_on_screen(life, time_score, capital_display_on_screen, capital, answer):
+def add_letter_to_capital_display_on_screen(life, capital_display_on_screen, capital, answer):
     j = 0
     for char in capital:
         if char == answer:
             capital_display_on_screen[j] = " " + answer + "  "
         j += 1
-    return life, "", time_score
+    return life, ""

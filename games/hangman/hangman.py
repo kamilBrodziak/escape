@@ -14,11 +14,9 @@ def game_start(hint):
         capitals = countries.readlines()
     cou_cap = change_random_line_into_list(capitals)
     win = ""
-    time_score = 0
     life = 6
     used_letters = []
     capital_display_on_screen = [" ___"] * len(cou_cap[1])
-    start_time = time.time()
     capital_guessed_template = change_capital_word_into_capital_guessed_template(cou_cap[1])
     delete_spaces_in_capital_display_on_screen(cou_cap[1], capital_display_on_screen)
     cls()
@@ -26,19 +24,18 @@ def game_start(hint):
         cls()
         printing_hangman(life, used_letters)
         printing_hint_and_capital(capital_display_on_screen, cou_cap, life, hint)
-        life, win, time_score = make_guess(
-                    life, cou_cap[1], capital_display_on_screen, used_letters, time_score)
+        life, win = make_guess(
+                    life, cou_cap[1], capital_display_on_screen, used_letters)
         if capital_guessed_template == capital_display_on_screen or win == "won":
-            time_score += time.time() - start_time
             break
     cls()
     printing_hangman(life, used_letters)
     time.sleep(1)
     win = False if life < 1 else True
-    return win, time_score
+    return win
 
 
-def make_guess(life, capital, capital_display_on_screen, used_letters, time_score):
+def make_guess(life, capital, capital_display_on_screen, used_letters):
     while True:
         answer = input("Give me your answer: ").upper()
         if not answer.isalpha() and len(answer) < 2:
@@ -48,13 +45,13 @@ def make_guess(life, capital, capital_display_on_screen, used_letters, time_scor
             continue
         if len(answer) > 1:
             if answer == capital:
-                return life, "won", time_score - 10
+                return life, "won"
             else:
-                return life - 2, "", time_score
+                return life - 2, ""
         else:
             if answer in capital and answer not in capital_display_on_screen:
                 return add_letter_to_capital_display_on_screen(
-                    life, time_score, capital_display_on_screen, capital, answer)
+                    life, capital_display_on_screen, capital, answer)
             else:
                 used_letters.append(answer)
-                return life - 1, "", time_score
+                return life - 1, ""

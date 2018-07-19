@@ -24,13 +24,13 @@ class Map:
             len(self.ascii_map[0])
         radiusy_start = posy - radius if posy - radius >= 0 else 0
         radiusy_end = posy + radius if posy + radius <= len(self.ascii_map) else len(self.ascii_map)
-        map_copy = self.replace_char_in_string(colored("@", "blue"), posx, posy)
+        map_copy = self.replace_char_in_string("⚘", posx, posy)
         new_map = ""
         for i in range(radiusy_start, radiusy_end):
-            radiusx_end_copy = radiusx_end if i != posy else radiusx_end + len(colored("@", "blue")) - 1
+            radiusx_end_copy = radiusx_end if i != posy else radiusx_end + len("⚘") - 1
             new_map += 10 * " " + "|" + map_copy[i][radiusx_start:radiusx_end_copy] + "|\n"
         self.map_show = new_map
-        special_signs = {'G': colored("G", "yellow"), 'O': colored("O", "yellow", attrs=["dark"]), 'B': colored("B", "red"), '$': colored('$', 'green')}
+        special_signs = {'G': colored("G", "yellow"), 'O': colored("O", "yellow", attrs=["dark"]), 'B': colored("☠", "red"), '$': '⛁'}
         for i in special_signs.keys():
             self.replace_char(i, special_signs[i])
 
