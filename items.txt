@@ -60,23 +60,19 @@
 59;light;15; torch ; + 15 to view
 60;light;25; flashlight ; + 25 to view
 61;light;2; lighter ; + 2 to view
-62;food;5; Small Pumpkin ; - 5 hunger
-63;food;10; Leg Meat ; - 10 hunger
-64;food;12; Honey Bread ; - 12 hunger
-65;food;20; Roasted Turkey ; - 20 hunger
-66;food;15; Hearty Steak ; - 15 hunger
-67;food;18; Spiced Wolf Meat ; - 18 hunger
-68;food;25; Roasted Boar Meat ; - 25 hunger
-69;food;5; Red Apple ; - 5 hunger
-70;food;7; Slice of cheese ; - 7 hunger
-71;food;12; Grilled fish ; - 12 hunger
-72;food;8; Boiled Clams ; - 8 hunger
-73;food;15; Crocolisk Steak ; - 15 hunger
-74;food;12; Blood Sausage ; - 12 hunger
-75;food;13; Coyote Steak ; - 13 hunger
-76;food;20; Venison Jerky ; - 20 hunger
-77;food;15; Hot Lion Chops ; - 15 hunger
-
-
-
-
+62;hunger;5; Small Pumpkin ; - 5 hunger
+63;hunger;10; Leg Meat ; - 10 hunger
+64;hunger;12; Honey Bread ; - 12 hunger
+65;hunger;20; Roasted Turkey ; - 20 hunger
+66;hunger;15; Hearty Steak ; - 15 hunger
+67;hunger;18; Spiced Wolf Meat ; - 18 hunger
+68;hunger;25; Roasted Boar Meat ; - 25 hunger
+69;hunger;5; Red Apple ; - 5 hunger
+70;hunger;7; Slice of cheese ; - 7 hunger
+71;hunger;12; Grilled fish ; - 12 hunger
+72;hunger;8; Boiled Clams ; - 8 hunger
+73;hunger;15; Crocolisk Steak ; - 15 hunger
+74;hunger;12; Blood Sausage ; - 12 hunger
+75;hunger;13; Coyote Steak ; - 13 hunger
+76;hunger;20; Venison Jerky ; - 20 hunger
+77;hunger;15; Hot Lion Chops ; - 15 hunger

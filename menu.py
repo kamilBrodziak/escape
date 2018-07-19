@@ -1,13 +1,12 @@
-import ui
-from common import getChar, arrows_move_menu, char_create
+from common import getChar, arrows_move_menu, cls
 import highscores
-import common, game
+from game import Gamestart
 
 
 def choose(option):
     options_amount = 4
     while True:
-        ui.print_menu("MAIN MENU", "main", option)
+        print_menu("MAIN MENU", "main", option)
         char = getChar(1)
 
         if char == '\x1b':  # arrows movement in menu
@@ -21,8 +20,8 @@ def choose(option):
         # choosing an option by enter
         elif char == '\n':
             if option == 1:
-                common.char_create()
-                game.main()
+                game = Gamestart()
+                game.run_game()
 
             elif option == 2:
                 highscores.highscore_show()
@@ -32,6 +31,18 @@ def choose(option):
 
             elif option == 4:
                 exit()
+
+
+def print_menu (title, which_menu, option, func1="", func2=""):
+    cls ()
+    with open("menu/" + which_menu + str(option) + '.txt', 'r') as option:
+        option = option.read()
+
+    if which_menu == "menu" :
+        option = option.replace(r"{}", func1.center(32), 1).replace(r"{}", func2.center(32), 1)
+
+    print(option)
+
 
 
 def main():

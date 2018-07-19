@@ -13,13 +13,13 @@ def cls():
 
 class HotCold:
     def __init__(self):
-        self.run()
+        self.win = False
+        self.hits = 5
 
     def run(self):
-        self.hits = 5
         self.random_numb = random.randint(1, 10)
         self.print_start()
-        self.win = self.input_anw()
+        self.input_anw()
 
     def print_start(self):
         cls()
@@ -32,18 +32,21 @@ class HotCold:
         print(string)
 
     def input_anw(self):
-        while self.hits > 0:
+        hits = self.hits
+        while hits > 0:
             answ = int(input('Give me you answer: '))
-            self.hits -= 1
+            hits -= 1
+            if not answ.isdigit():
+                print('That\'s not number! ')
             if answ > self.random_numb:
-                print("Too high, you have", self.hits, "tries left!")
+                print("Too high, you have", hits, "tries left!")
             elif answ < self.random_numb:
-                print("To low, you have", self.hits, "tries left!")
+                print("To low, you have", hits, "tries left!")
             elif answ == self.random_numb:
                 print("You won and moved to next level!!")
-                time.sleep(2)
+                time.sleep(3)
                 self.win = True
                 return
         print("You lost, you stay in this level!")
-        time.sleep(2)
+        time.sleep(3)
         self.win = False

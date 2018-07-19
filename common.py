@@ -41,7 +41,6 @@ class Printing:
         print("")
 
 
-
 def getChar(bits):  # get tke pressed key from user
     try:
         import msvcrt
@@ -79,18 +78,6 @@ def arrows_move_menu(option, max_, key1, key2, char, value_change=1, min_=1):  #
 def cls():  # clearing screen in terminal
         os.system("clear")
 
-def char_create ():
-    nick = input ("Enter your nick: \n")
-    gender = input ("Male / Female \n")
-    if gender == 'Male' or gender == 'Female' or gender == 'male' or gender == 'female':
-        char_info = [nick, gender]
-
-    else :
-        print ('Invalid gender!')
-        return char_create()
-    cls()
-
-
 
 def print_back_to_menu():
     with open("back.txt") as back_menu:
@@ -102,17 +89,3 @@ def print_back_to_menu():
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, oldSettings)
         return answer
-
-
-def arrows_move(posx, posy, char, map_):  # moving in menu/game
-    arrows_ud = {"[A": -1, "[B": 1, "[C": 0, "[D": 0}  # up down
-    arrows_lr = {"[A": 0, "[B": 0, "[C": 1, "[D": -1}  # left right
-    if posx + arrows_lr[char] < 0 or posx + arrows_lr[char] > len(map_.ascii_map[0]) - 1 or \
-        posy + arrows_ud[char] < 0 or posy + arrows_ud[char] > len(map_.ascii_map) - 1 or \
-            map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "█":
-        return posx, posy
-    elif map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] == "⛁":
-        pass
-    elif map_.ascii_map[posy + arrows_ud[char]][posx + arrows_lr[char]] in {'O', 'G', 'B'}:
-        pass
-    return posx + arrows_lr[char], posy + arrows_ud[char]

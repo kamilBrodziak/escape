@@ -2,70 +2,114 @@ import player
 import game_map
 import mobs
 import inventory
-from common import getChar, arrows_move, cls
+from common import getChar, cls
 import time
 import levels_game
+import fight
+from termcolor import cprint
 
 
-def gamestart(gamer, map_, posx, posy):
-    enemies = {'O', 'G', 'B'}
-    chest = '$'
-    levels = {'1', '2', '3', '4', '5'}
-    inv = inventory.Inv(6, gamer)
-    while True:
-        print(map_)
+class Gamestart:
+    def __init__(self):
+        self.gamer = player.Player(2, 2)
+        self.which_level = 1
+        self.map_ = game_map.Map(self.gamer, "map" + str(self.which_level) + ".txt")
+        self.inv = inventory.Inv(6, self.gamer, "items.txt")
+        self.actual_chunk = self.map_.ascii_map[self.gamer.posy][self.gamer.posx]
+        self.enemies = {'O', 'G', 'B'}
+        self.chest = '$'
+        self.levels = {'1', '2', '3', '4'}
+        self.fighting = fight.Fight(self.gamer)
+        self.END_LEVEL = 3
+        self.which_ending = ""
+
+    def run_game(self):
+        self.map_.map_load(2, 2)
+        while self.gamer.health > 0 and self.gamer.hunger > 0:
+            print(self.map_)
+            self.actions()
+            if self.actual_chunk in self.enemies or self.actual_chunk == self.chest:
+                self.map_.replace_char(self.map_.ascii_map[self.gamer.posy][self.gamer.posx], " ", self.gamer.posx, self.gamer.posy)
+                if self.actual_chunk in self.enemies:
+                    self.fighting.start_fight(self.actual_chunk, self.which_level)
+                    self.inv.add_rand(4)
+                elif self.actual_chunk == self.chest:
+                    self.inv.add_rand(2)
+            elif self.actual_chunk in self.levels and self.gamer.key:
+                self.start_level_game()
+        # self.highscore.add(self.gamer.nick, self.gamer.score)
+        if self.which_ending == "":
+            self.which_ending = "LooseScreen"
+
+    def actions(self):
         char = getChar(1)
         if char == "\x1b":
             char = getChar(2)
-            oldpos = [posx, posy]
-            posx, posy = arrows_move(gamer.posx, gamer.posy, char, map_)
-            gamer.change_pos(posx, posy)
-            if [posx, posy] != oldpos:
-                gamer.hunger -= 1/5
-                gamer.update_stats()
-            map_.map_load(posx, posy)
-        elif char == "\n":
-            pass
+            self.arrows_move(char)
         elif char.lower() == 'c':
-            gamer.run_statistic()
+            self.gamer.run_statistic()
         elif char.lower() == "i":
-            inv.run_inv()
-            map_.map_load(posx, posy)
-        actual_chunk = map_.ascii_map[posy][posx]
-        if actual_chunk in enemies or actual_chunk == chest:
-            map_.replace_char(map_.ascii_map[posy][posx], " ", posx, posy)
-            if actual_chunk in enemies:
-                gamer.enemy_encountered(map_)
-            elif actual_chunk == chest:
-                inv.add_rand("items.txt", 40)
-        elif actual_chunk in levels and gamer.key:
-            gamer.change_pos(2, 2)
-            levels_game = LevelGameStart(option)
-            levels_game.load_game()
-            score = levels_game.score
-            if result:
-                gamer.score -= score
-                gamer.key = False
-                map_.change_map("ascii/map" + actual_chunk + ".txt")
-                map_.map_load(2, 2)
-            else:
-                gamer.score -= 20
-            cls()
-            with open("ascii/next_level" + str(result) + ".txt") as filename:
-                    print(filename.read())
-            time.sleep(3)
-            if actual_chunk == 4:
+            self.inv.run_inv()
+            self.map_.map_load(self.gamer.posx, self.gamer.posy)
+        elif char == "0":
+            self.inv.add_rand(50)
+        elif char == "9":
+            self.gamer.key = True
+        elif char == '2':
+            self.which_level += 2
+            self.change_map("map" + str(self.which_level) + ".txt")
+            self.gamer.posx = 115
+            self.gamer.posy = 20
+            self.map_.map_load(115, 20)
+        elif char == '3':
+            self.which_level = 3
+            self.change_map("map" + str(self.which_level) + ".txt")
+            self.gamer.posx = 119
+            self.gamer.posy = 29
+            self.map_.map_load(119, 29)
+        elif char == '8':
+            self.gamer.equiped['light'] = 100
+            self.gamer.update_stats()
+
+    def arrows_move(self, char):
+        arrows_ud = {"[A": -1, "[B": 1, "[C": 0, "[D": 0}  # up down
+        arrows_lr = {"[A": 0, "[B": 0, "[C": 1, "[D": -1}  # left right
+        if self.map_.ascii_map[self.gamer.posy + arrows_ud[char]][self.gamer.posx + arrows_lr[char]] != "█":
+            self.gamer.posx += arrows_lr[char]
+            self.gamer.posy += arrows_ud[char]
+            self.gamer.hunger -= 1/5
+            self.gamer.update_stats()
+            self.map_.map_load(self.gamer.posx, self.gamer.posy)
+            self.actual_chunk = self.map_.ascii_map[self.gamer.posy][self.gamer.posx]
+
+    def start_level_game(self):
+        level_game = levels_game.LevelGameStart(self.which_level)
+        level_game.load_game()
+
+        if level_game.result:
+            self.gamer.score += 50
+            self.which_level += 1
+            if self.which_level == self.END_LEVEL + 1:
+                self.which_ending = "WinScreen"
                 return
+                
+            self.gamer.key = False
+            self.change_map("map" + str(self.which_level) + ".txt")
+        else:
+            self.gamer.score -= 20
+            self.gamer.posx -= 1
+            self.map_.map_load(self.gamer.posx, self.gamer.posy)
+        cls()
 
-    return
-
-
-def main():
-    posx = 2
-    posy = 2
-    gamer = player.Player("kamil", posx, posy)
-    map_ = game_map.Map(gamer, "map1.txt")
-    map_.map_load(posx, posy)
-    gamestart(gamer, map_, posx, posy)
-
+    def change_map(self, filename):
+        self.map_ = game_map.Map(self.gamer, filename)
+        self.gamer.posx = 2
+        self.gamer.posy = 2
+        self.map_.map_load(2, 2)
     
+    def print_end_screen(self):
+        cls()
+        color = 'green' if self.which_ending == "WinScreen" else 'red'
+        with open("ascii/" + self.which_ending + ".txt") as screen:
+            cprint(screen.read(), color, attrs=['bold'])
+        time.sleep(2)

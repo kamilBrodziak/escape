@@ -1,6 +1,7 @@
 import random
 import os
 import sys
+import time
 
 
 def cls():
@@ -40,13 +41,13 @@ class GameStart:
 
     def run(self):
         while self.win not in {True, False}:
-            cls()
             self.make_move()
             self.check_result()
             if self.win in {True, False}:
                 break
             self.opponent_move()
             self.check_result()
+        time.sleep(2)
 
     def make_move(self):
         char = ""
@@ -84,6 +85,7 @@ class GameStart:
         self.board[self.actual_pos] = "X"
 
     def opponent_move(self):
+        cls()
         choice = random.choice(self.board_id)
         self.board[choice] = 'O'
         del self.board_id[self.board_id.index(choice)]
@@ -99,7 +101,7 @@ class GameStart:
             match = [key, key, key]
             if match in matches:
                 self.win = result[key]
-        if len(self.board) == 0:
+        if len(self.board_id) == 0:
             self.win = False
 
     def print_board(self):

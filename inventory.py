@@ -8,21 +8,22 @@ import time
 
 
 class Inv:
-    def __init__(self, items_per_page, gamer):
+    def __init__(self, items_per_page, gamer, filename):
         self.inventory = []  # list of lists
 
         # dict which keys are types of item equiped, and values are list containing item
         self.temp_equiped = {}
 
+        self.filename = filename
         self.gamer = gamer
         self.items_per_page = items_per_page
         self.display_inv = DisplayInv(self.inventory, self.items_per_page, self.gamer.equiped, self.gamer)
         self.actual_pos = 0  # actual position of our cursor in inventory
         self.actual_page = 1
 
-    def add_rand(self, filename, how_much):
+    def add_rand(self, how_much):
         # how_much - how much random generated item we want to add to inv
-        with open(filename) as filename:
+        with open(self.filename) as filename:
             items = filename.readlines()
 
         for i in range(how_much):
@@ -54,6 +55,8 @@ class Inv:
                 self.arrows_move()
             elif char == '\n':
                 self.use_item()
+            elif char.lower() == 'e':
+                self.display_inv.equiped_show = False if self.display_inv.equiped_show else True
 
     def arrows_move(self):
         char = getChar(2)
@@ -109,6 +112,10 @@ class Inv:
     def change_page_display(self):
         self.actual_pos -= 1
         self.actual_page = ceil(self.actual_pos / self.items_per_page)
+
+        # if we were on actual_pos = 1, then upper equation will give actual_page = 0
+        if self.actual_page == 0:
+            self.actual_page = 1
         self.max_page = ceil(len(self.inventory) / self.items_per_page)
 
     def add_item(self, item):
@@ -134,6 +141,7 @@ class DisplayInv:
         self.table_length = sum(self.col_lengths) + len(self.col_lengths) - 1  # without outer frames
         self.stats = equiped
         self.printing = Printing(self.col_lengths, self.table_length, self.title)
+        self.equiped_show = False
 
     def change_names_equiped(self, temp_equiped):
         self.names_equiped[temp_equiped[1]] = temp_equiped[3]
@@ -174,12 +182,13 @@ class DisplayInv:
         cprint("|" + self.table_length * "_" + "|", "white", "on_grey", attrs=['bold'])
 
     def print_equiped(self):
-        cprint("/" + self.table_length * "-" + "\\", 'white', 'on_grey', attrs=['bold'])
-        cprint("|" + "Equiped".center(self.table_length, " ") + "|", 'white', 'on_grey', attrs=['bold'])
-        cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
+        if self.equiped_show:
+            cprint("/" + self.table_length * "-" + "\\", 'white', 'on_grey', attrs=['bold'])
+            cprint("|" + "Equiped".center(self.table_length, " ") + "|", 'white', 'on_grey', attrs=['bold'])
+            cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
 
-        for key in self.names_equiped:
-            string = key + ":  " + self.names_equiped[key]
-            print("| ", string, " " * (self.table_length - 1), "|")
+            for key in self.names_equiped:
+                string = key + ":  " + self.names_equiped[key]
+                print("| ", string, " " * (self.table_length - 1), "|")
 
-        cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
+            cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
