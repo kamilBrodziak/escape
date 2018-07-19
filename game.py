@@ -87,7 +87,7 @@ class Gamestart:
         level_game.load_game()
 
         if level_game.result:
-            self.gamer.score += 50
+            self.gamer.score += 1000
             self.which_level += 1
             if self.which_level == self.END_LEVEL + 1:
                 self.which_ending = "WinScreen"
@@ -96,7 +96,7 @@ class Gamestart:
             self.gamer.key = False
             self.change_map("map" + str(self.which_level) + ".txt")
         else:
-            self.gamer.score -= 20
+            self.gamer.score -= 100
             self.gamer.posx -= 1
             self.map_.map_load(self.gamer.posx, self.gamer.posy)
         cls()

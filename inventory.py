@@ -189,6 +189,6 @@ class DisplayInv:
 
             for key in self.names_equiped:
                 string = key + ":  " + self.names_equiped[key]
-                print("| ", string, " " * (self.table_length - 1), "|")
+                print("| ", string.center(self.table_length - 3, " "), "|")
 
             cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])

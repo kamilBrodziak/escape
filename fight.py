@@ -22,6 +22,7 @@ class Fight:
     def start_fight(self, which_enemy, which_level):
         self.mob = Mob(which_enemy, which_level)
         self.random_quest()
+        self.score = self.mob.health
         char = ""
         option = 'A'
         movement = {'[CA': 'B', '[CC': 'D', '[DB': 'A', '[DD': 'C', '[BA': 'C', '[BB': 'D', '[AC': 'A', '[AD': 'B',
@@ -68,7 +69,7 @@ class Fight:
 
             if self.mob.health <= 0:
                 print ("Enemie is Dead! Well done hero!")
-                self.gamer.score += 10
+                self.gamer.score += self.score
                 self.gamer.key = self.mob.have_key
                 time.sleep (1.5)
 
