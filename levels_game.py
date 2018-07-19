@@ -13,7 +13,7 @@ class LevelGameStart:
 
     def load_game(self):
         if self.option == '2':
-            hot_cold.run()
+            hot_cold = HotCold()
             result = self.hot_cold.win
             if result:
                 self.option = str(int(self.option) + 1)

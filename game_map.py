@@ -30,7 +30,8 @@ class Map:
             radiusx_end_copy = radiusx_end if i != posy else radiusx_end + len("⚘") - 1
             new_map += 10 * " " + "|" + map_copy[i][radiusx_start:radiusx_end_copy] + "|\n"
         self.map_show = new_map
-        special_signs = {'G': colored("G", "yellow"), 'O': colored("O", "yellow", attrs=["dark"]), 'B': colored("☠", "red"), '$': '⛁'}
+        special_signs = {'G': colored("G", "yellow"), 'O': colored("O", "yellow", attrs=["dark"]),
+                         'B': colored("☠", "red"), '$': '⛁'}
         for i in special_signs.keys():
             self.replace_char(i, special_signs[i])
 

@@ -93,15 +93,15 @@ class GameStart:
         result = {'X': True, 'O': False}
         b = self.board
         matches = [[b[0], b[4], b[8]], [b[2], b[4], b[6]],
-                    [b[0], b[3], b[6]], [b[1], b[4], b[7]], [b[2], b[5], b[8]],
-                    [b[0], b[1], b[2]], [b[3], b[4], b[5]], [b[6], b[7], b[8]]]
+                   [b[0], b[3], b[6]], [b[1], b[4], b[7]], [b[2], b[5], b[8]],
+                   [b[0], b[1], b[2]], [b[3], b[4], b[5]], [b[6], b[7], b[8]]]
         for key in result:
             match = [key, key, key]
             if match in matches:
                 self.win = result[key]
         if len(self.board) == 0:
             self.win = False
-    
+
     def print_board(self):
         empty = "          \n          \n          \n          \n          \n          \n          \n          ".split("\n")
         x = "XX      XX\n XX    XX \n  XX  XX  \n   XXXX   \n   XXXX   \n  XX  XX  \n XX    XX \nXX      XX".split("\n")

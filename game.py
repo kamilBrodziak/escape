@@ -40,7 +40,9 @@ def gamestart(gamer, map_, posx, posy):
                 inv.add_rand("items.txt", 40)
         elif actual_chunk in levels and gamer.key:
             gamer.change_pos(2, 2)
-            result, score = levels_game.main(actual_chunk)
+            levels_game = LevelGameStart(option)
+            levels_game.load_game()
+            score = levels_game.score
             if result:
                 gamer.score -= score
                 gamer.key = False
