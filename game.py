@@ -67,4 +67,3 @@ def main():
     gamestart(gamer, map_, posx, posy)
 
 
-main()

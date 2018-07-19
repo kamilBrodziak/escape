@@ -41,12 +41,6 @@ class Printing:
         print("")
 
 
-def cls():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
-
 
 def getChar(bits):  # get tke pressed key from user
     try:
@@ -70,7 +64,7 @@ def getChar(bits):  # get tke pressed key from user
         return answer
 
 
-def arrows_move(option, max_, key1, key2, char, value_change=1, min_=1):  # moving in menu
+def arrows_move_menu(option, max_, key1, key2, char, value_change=1, min_=1):  # moving in menu
     if char == key1:
         if option > min_:
             option -= value_change
@@ -95,7 +89,7 @@ def char_create ():
         print ('Invalid gender!')
         return char_create()
     cls()
-    print (char_info)
+
 
 
 def print_back_to_menu():

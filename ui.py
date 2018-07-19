@@ -1,4 +1,7 @@
+from common import cls
+
 def print_menu (title, which_menu, option, func1="", func2=""):
+    cls ()
     with open("menu/" + which_menu + str(option) + '.txt', 'r') as option:
         option = option.read()
 

@@ -1,7 +1,7 @@
 import ui
-from common import getChar, arrows_move, char_create
+from common import getChar, arrows_move_menu, char_create
 import highscores
-import common
+import common, game
 
 
 def choose(option):
@@ -12,7 +12,7 @@ def choose(option):
 
         if char == '\x1b':  # arrows movement in menu
             char = getChar(2)
-            option = arrows_move(option, options_amount, '[A', '[B', char)
+            option = arrows_move_menu(option, options_amount, '[A', '[B', char)
         
         # moving in menu by pressing numbers on keyboard
         elif char.isdigit() and int(char) > 0 and int(char) < options_amount + 1:
@@ -22,6 +22,7 @@ def choose(option):
         elif char == '\n':
             if option == 1:
                 common.char_create()
+                game.main()
 
             elif option == 2:
                 highscores.highscore_show()
