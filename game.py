@@ -66,4 +66,4 @@ def main():
     map_.map_load(posx, posy)
     gamestart(gamer, map_, posx, posy)
 
-
+    

@@ -1,97 +1,81 @@
------------swords----------------
-Old rusted sword;adds 2 to your attack;2;sword
-Long knife;adds 8 to your attack;8;sword
-Forsaken Sword;adds 10 to your attack;10;sword
-Longsword;adds 15 to your attack;15;sword
-Deargstalker Shortsword;adds 21 to your attack;21;sword
-Well-Used Sword;adds 26 to your attack;26;sword
-Icy Ebon Warblade;adds 40 to your attack;40;sword
----------------------------------
---------------axes---------------
-Felguard Axe;adds 4 to your attack;4;axe
-Double Axe;adds 10 to your attack;10;axe
-Razor Hill Axe;adds 14 to your attack;14;axe
-Sharp Axe;adds 19 to your attack;19;axe
-Arcane Forged Axe;adds 21 to your attack;21;axe
-Stormwind Vanguar Waraxe;adds 25 to your attack;25;axe
-Waraxe of the Horde Vanguard;adds 30 to your attack;30;axe
-Axe of Eclipse;adds 34 to your attack;34;axe
----------------------------------
------------chestplate------------
-Battlelord's Chestplate;adds 1 to your deffence;1;chest
-Felforged Chestplate;adds 3 to your deffence;3;chest
-Gutcrusher Chestplate;adds 5 to your deffence;5;chest
-Plainsthunder Chestplate;adds 9 to your deffence;9;chest
-Gravewalker's Chestplate;adds 13 to your deffence;13;chest
-Netherforce Chestplate;adds 15 to your deffence;15;chest
-Cold-Forged Chestplate;adds 20 to your deffence;20;chest
-Deathbone Chestplate;adds 23 to your deffence;23;chest
----------------------------------
---------------feet---------------
-Battlelord's Warboots;adds 1 to your decence;1;boots
-Combatant's Plate Warboots;adds 2 to your decence;2;boots
-Leystone Boots;adds 3 to your decence;3;boots
-Felforged Warboots;adds 5 to your decence;5;boots
-Thunderpeak Greatboots;adds 8 to your decence;8;boots
-Plate Hiking Boots;adds 10 to your decence;10;boots
-Sunsoul Boots;adds 13 to your decence;13;boots
-Stonestep Boots;adds 15 to your decence;15;boots
---------------------------------
--------------hands--------------
-Gauntlets of Outrage;adds 1 to your deffence;1;gloves
-Blood-Spatteres Gauntlets;adds 2 to your deffence;2;gloves
-Voidclaw Gauntlates;adds 3 to your deffence;3;gloves
-Rumblestone Gauntlates;adds 4 to your deffence;4;gloves
-Deathlord's Gauntlates;adds 5 to your deffence;5;gloves
-Gauntlates of the Silver Hand;adds 8 to your deffence;8;gloves
-Earthguard Gaunlates;adds 10 to your deffence;10;gloves
-Leystone Gauntlets;adds 15 to your deffence;15;gloves
-Felforged Gauntlates;adds 17 to your deffence;17;gloves
---------------------------------
-------------head----------------
-Felforged Helmet;adds 1 to your deffence;1;helmet
-Rooksguard Helmet;adds 2 to your deffence;2;helmet
-Sea Rider's Helmet;adds 3 to your deffence;3;helmet
-Rastari Helmet;adds 4 to your deffence;4;helmet
-Honored Viking Helmet;adds 5 to your deffence;5;helmet
-Deathlord's Helm;adds 6 to your deffence;6;helmet
-Leystone Helm;adds 8 to your deffence;8;helmet
-Sunsoul Helm;adds 10 to your deffence;10;helmet
-Heart-Lesion Helm;adds 12 to your deffence;12;helmet
-Blackrock Greathelm;adds 15 to your deffence;15;helmet
--------------------------------
-----------shoulders------------
-Twilight-Heart Shoulderplates;adds 2 to your deffence;2;shoulders
-Stalwart Shoulderpads;adds 3 to your deffence;3;shoulders
-Nightsfall Shoulderplates;adds 4 to your deffence;4;shoulders
-Blacksteel Shoulderplates;adds 5 to your deffence;5;shoulders
-Darkfallem Shoulderplates;adds 6 to your deffence;6;shoulders
-Reconstructed Holy Shoulderplates;adds 8 to your deffence;8;shoulders
-Reconstructed Furious Shoulderplates;adds 9 to your deffence;9;shoulders
-Reconstructed Bloody Shoulderplates;adds 10 to your deffence;10;shoulders
---------------------------------------
-----------------others----------------
-lanthern;allow you to see in darknes ;8;light
-torch;allow you to see in darknes ;15;light
-flashlight;allow you to see in darknes ;25;light
-lighter;allow you to see in darknes ;2;light
-
-Small Pumpkin;removes 5 hunger;5;food
-Leg Meat;removes 10 hunger;food
-Honey Bread;removes 12 hunger;12;food
-Roasted Turkey;removes 20 hunger;20;food
-Hearty Steak;removes 15 hunger;15;food
-Spiced Wolf Meat;removes 18 hunger;18;food
-Roasted Boar Meat;removes 25 hunger;25;food
-Red Apple;removes 5 hunger;5;food
-Slice of cheese;removes 7 hunger;7;food
-Grilled fish;removes 12 hunger;12;food
-Boiled Clams;removes 8 hunger;8;food
-Crocolisk Steak;removes 15 hunger;15;food
-Blood Sausage;removes 12 hunger;12;food
-Coyote Steak;removes 13 hunger;13;food
-Venison Jerky;removes 20 hunger;20;food
-Hot Lion Chops;removes 15 hunger;15;food
+0;sword;2; Old rusted sword ; + 2 to your attack
+1;sword;8; Long knife ; + 8 to your attack
+2;sword;10; Forsaken Sword ; + 10 to your attack
+3;sword;15; Longsword ; + 15 to your attack
+4;sword;21; Deargstalker Shortsword ; + 21 to your attack
+5;sword;26; Well-Used Sword ; + 26 to your attack
+6;sword;40; Icy Ebon Warblade ; + 40 to your attack
+7;sword;4; Felguard Axe ; + 4 to your attack
+8;sword;10; Double Axe ; + 10 to your attack
+9;sword;14; Razor Hill Axe ; + 14 to your attack
+10;sword;19; Sharp Axe ; + 19 to your attack
+11;sword;21; Arcane Forged Axe ; + 21 to your attack
+12;sword;25; Stormwind Vanguar Warsword ; + 25 to your attack
+13;sword;30; Warsword of the Horde Vanguard ; + 30 to your attack
+14;sword;34; Axe of Eclipse ; + 34 to your attack
+15;chest;1; Battlelord's Chestplate ; + 1 to your deffence
+16;chest;3; Felforged Chestplate ; + 3 to your deffence
+17;chest;5; Gutcrusher Chestplate ; + 5 to your deffence
+18;chest;9; Plainsthunder Chestplate ; + 9 to your deffence
+19;chest;13; Gravewalker's Chestplate ; + 13 to your deffence
+20;chest;15; Netherforce Chestplate ; + 15 to your deffence
+21;chest;20; Cold-Forged Chestplate ; + 20 to your deffence
+22;chest;23; Deathbone Chestplate ; + 23 to your deffence
+23;boots;1; Battlelord's Warboots ; + 1 to your decence
+24;boots;2; Combatant's Plate Warboots ; + 2 to your decence
+25;boots;3; Leystone Boots ; + 3 to your decence
+26;boots;5; Felforged Warboots ; + 5 to your decence
+27;boots;8; Thunderpeak Greatboots ; + 8 to your decence
+28;boots;10; Plate Hiking Boots ; + 10 to your decence
+29;boots;13; Sunsoul Boots ; + 13 to your decence
+30;boots;15; Stonestep Boots ; + 15 to your decence
+31;gloves;1; Gauntlets of Outrage ; + 1 to your deffence
+32;gloves;2; Blood-Spatteres Gauntlets ; + 2 to your deffence
+33;gloves;3; Voidclaw Gauntlates ; + 3 to your deffence
+34;gloves;4; Rumblestone Gauntlates ; + 4 to your deffence
+35;gloves;5; Deathlord's Gauntlates ; + 5 to your deffence
+36;gloves;8; Gauntlates of the Silver Hand ; + 8 to your deffence
+37;gloves;10; Earthguard Gaunlates ; + 10 to your deffence
+38;gloves;15; Leystone Gauntlets ; + 15 to your deffence
+39;gloves;17; Felforged Gauntlates ; + 17 to your deffence
+40;helmet;1; Felforged Helmet ; + 1 to your deffence
+41;helmet;2; Rooksguard Helmet ; + 2 to your deffence
+42;helmet;3; Sea Rider's Helmet ; + 3 to your deffence
+43;helmet;4; Rastari Helmet ; + 4 to your deffence
+44;helmet;5; Honored Viking Helmet ; + 5 to your deffence
+45;helmet;6; Deathlord's Helm ; + 6 to your deffence
+46;helmet;8; Leystone Helm ; + 8 to your deffence
+47;helmet;10; Sunsoul Helm ; + 10 to your deffence
+48;helmet;12; Heart-Lesion Helm ; + 12 to your deffence
+49;helmet;15; Blackrock Greathelm ; + 15 to your deffence
+50;shoulder;2; Twilight-Heart Shoulderplates ; + 2 to your deffence
+51;shoulder;3; Stalwart Shoulderpads ; + 3 to your deffence
+52;shoulder;4; Nightsfall Shoulderplates ; + 4 to your deffence
+53;shoulder;5; Blacksteel Shoulderplates; + 5 to your deffence
+54;shoulder;6; Darkfallem Shoulderplates ; + 6 to your deffence
+55;shoulder;8; Reconstructed Holy Shoulderplates ; + 8 to your deffence
+56;shoulder;9; Reconstructed Furious Shoulderplates ; + 9 to your deffence
+57;shoulder;10; Reconstructed Bloody Shoulderplates ; + 10 to your deffence
+58;light;8; lanthern ; + 8 to view
+59;light;15; torch ; + 15 to view
+60;light;25; flashlight ; + 25 to view
+61;light;2; lighter ; + 2 to view
+62;food;5; Small Pumpkin ; - 5 hunger
+63;food;10; Leg Meat ; - 10 hunger
+64;food;12; Honey Bread ; - 12 hunger
+65;food;20; Roasted Turkey ; - 20 hunger
+66;food;15; Hearty Steak ; - 15 hunger
+67;food;18; Spiced Wolf Meat ; - 18 hunger
+68;food;25; Roasted Boar Meat ; - 25 hunger
+69;food;5; Red Apple ; - 5 hunger
+70;food;7; Slice of cheese ; - 7 hunger
+71;food;12; Grilled fish ; - 12 hunger
+72;food;8; Boiled Clams ; - 8 hunger
+73;food;15; Crocolisk Steak ; - 15 hunger
+74;food;12; Blood Sausage ; - 12 hunger
+75;food;13; Coyote Steak ; - 13 hunger
+76;food;20; Venison Jerky ; - 20 hunger
+77;food;15; Hot Lion Chops ; - 15 hunger
 
 
 
