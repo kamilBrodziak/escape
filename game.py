@@ -35,6 +35,7 @@ class Gamestart:
                 if self.actual_chunk in self.enemies:
                     self.fighting.start_fight(self.actual_chunk, self.which_level)
                     self.inv.add_rand(4)
+                    self.actual_chunk = self.map_.ascii_map[self.gamer.posy][self.gamer.posx]
                 elif self.actual_chunk == self.chest:
                     self.inv.add_rand(2)
             elif self.actual_chunk in self.levels and self.gamer.key:
@@ -74,6 +75,8 @@ class Gamestart:
         elif char == '8':
             self.gamer.equiped['light'] = 100
             self.gamer.update_stats()
+            self.map_.map_load(self.gamer.posx, self.gamer.posy)
+            # print(self.map_)
         elif char == "7":
             self.hint = True
 
