@@ -72,6 +72,7 @@ class Fight:
                 self.gamer.score += self.score
                 self.gamer.key = self.mob.have_key
                 time.sleep (1.5)
+                self.gamer.health = 100
 
             elif self.gamer.health <= 0:
                 print ("Wow you are dead! Game over!")

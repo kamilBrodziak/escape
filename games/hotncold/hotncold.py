@@ -34,15 +34,15 @@ class HotCold:
     def input_anw(self):
         hits = self.hits
         while hits > 0:
-            answ = int(input('Give me you answer: '))
+            answ = input('Give me you answer: ')
             hits -= 1
             if not answ.isdigit():
                 print('That\'s not number! ')
-            if answ > self.random_numb:
+            if int(answ) > self.random_numb:
                 print("Too high, you have", hits, "tries left!")
-            elif answ < self.random_numb:
+            elif int(answ) < self.random_numb:
                 print("To low, you have", hits, "tries left!")
-            elif answ == self.random_numb:
+            elif int(answ) == self.random_numb:
                 print("You won and moved to next level!!")
                 time.sleep(3)
                 self.win = True

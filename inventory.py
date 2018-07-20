@@ -42,7 +42,7 @@ class Inv:
             else:
                 item.extend([1])  # adding amount to item
                 self.inventory.append(item)  # adding item to inventory
-
+                
     def run_inv(self):
         self.max_page = ceil(len(self.inventory) / self.items_per_page)
         char = ""  # key pressed
