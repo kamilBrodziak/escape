@@ -7,6 +7,7 @@ import time
 import levels_game
 import fight
 from termcolor import cprint
+from highscores import add_highscore_to_file, highscore_add_to_highscore_list
 
 
 class Gamestart:
@@ -22,10 +23,11 @@ class Gamestart:
         self.fighting = fight.Fight(self.gamer)
         self.END_LEVEL = 3
         self.which_ending = ""
+        self.hint = False
 
     def run_game(self):
         self.map_.map_load(2, 2)
-        while self.gamer.health > 0 and self.gamer.hunger > 0:
+        while self.gamer.health > 0 and self.gamer.hunger > 0 and self.which_level < self.END_LEVEL + 1:
             print(self.map_)
             self.actions()
             if self.actual_chunk in self.enemies or self.actual_chunk == self.chest:
@@ -37,9 +39,11 @@ class Gamestart:
                     self.inv.add_rand(2)
             elif self.actual_chunk in self.levels and self.gamer.key:
                 self.start_level_game()
-        # self.highscore.add(self.gamer.nick, self.gamer.score)
+        highscore_add_to_highscore_list(self.gamer.name, self.gamer.score)
+        add_highscore_to_file(self.gamer.name, self.gamer.score)
         if self.which_ending == "":
             self.which_ending = "LooseScreen"
+        self.print_end_screen()
 
     def actions(self):
         char = getChar(1)
@@ -56,7 +60,7 @@ class Gamestart:
         elif char == "9":
             self.gamer.key = True
         elif char == '2':
-            self.which_level += 2
+            self.which_level = 2
             self.change_map("map" + str(self.which_level) + ".txt")
             self.gamer.posx = 115
             self.gamer.posy = 20
@@ -70,6 +74,8 @@ class Gamestart:
         elif char == '8':
             self.gamer.equiped['light'] = 100
             self.gamer.update_stats()
+        elif char == "7":
+            self.hint = True
 
     def arrows_move(self, char):
         arrows_ud = {"[A": -1, "[B": 1, "[C": 0, "[D": 0}  # up down
@@ -83,7 +89,7 @@ class Gamestart:
             self.actual_chunk = self.map_.ascii_map[self.gamer.posy][self.gamer.posx]
 
     def start_level_game(self):
-        level_game = levels_game.LevelGameStart(self.which_level)
+        level_game = levels_game.LevelGameStart(self.which_level, self.hint)
         level_game.load_game()
 
         if level_game.result:

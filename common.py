@@ -80,12 +80,10 @@ def cls():  # clearing screen in terminal
 
 
 def print_back_to_menu():
-    with open("back.txt") as back_menu:
+    with open("ascii/back.txt") as back_menu:
         print(back_menu.read())
-
-        try:
-            tty.setcbreak(fd)
-            answer = sys.stdin.read(bits)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, oldSettings)
-        return answer
+    char = ""
+    while char != "\n":
+        char = getChar(1)
+        if char == '\x1b':
+            getChar(2)

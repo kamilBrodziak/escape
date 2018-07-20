@@ -33,9 +33,8 @@ class Fight:
             while char != "\n":
                 with open("ascii/ans_ascii_" + option + ".txt") as filename:
                     self.string = filename.read()
-
-                self.string = self.string.replace('[]', str(self.gamer.health) + (7 - len(str(self.gamer.health))) * " ", 1)
-                self.string = self.string.replace('[]', str(self.mob.health) + (5 - len(str(self.mob.health))) * " ", 1 )
+                self.string = self.string.replace('[]', str(round(self.gamer.health, 2)) + (7 - len(str(round(self.gamer.health, 2)))) * " ", 1)
+                self.string = self.string.replace('[]', str(round(self.mob.health, 2)) + (5 - len(str(round(self.mob.health, 2)))) * " ", 1 )
                 self.string = self.string.replace('{}', self.chosen_q[0] + (86 - len(self.chosen_q[0])) * " " , 1)
                 self.string = self.string.replace('{}', self.chosen_q[2]['A'] + (22 - len(self.chosen_q[2]['A'])) * " " , 1)
                 self.string = self.string.replace('{}', self.chosen_q[2]['B'] + (24 - len(self.chosen_q[2]['B'])) * " " , 1)

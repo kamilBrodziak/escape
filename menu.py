@@ -24,6 +24,7 @@ def choose(option):
                 game.run_game()
 
             elif option == 2:
+                cls()
                 highscores.highscore_show()
 
             elif option == 3:

@@ -4,11 +4,12 @@ from games.hotncold.hotncold import HotCold
 
 
 class LevelGameStart:
-    def __init__(self, option):
+    def __init__(self, option, hint):
         self.option = option
         self.tictactoe = GameStart()
         self.hot_cold = HotCold()
         self.result = False
+        self.hint = hint
 
     def load_game(self):
         if self.option == 1:
@@ -18,4 +19,4 @@ class LevelGameStart:
             self.tictactoe.run()
             self.result = self.tictactoe.win
         if self.option == 3:
-            self.result = game_start(False)
+            self.result = game_start(self.hint)

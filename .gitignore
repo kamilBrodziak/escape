@@ -1,4 +1,5 @@
 __pycache__/*
+__pycache__/.
 games/__pycache__/*
 games/hangman/__pycache__/*
 games/tictactoe/__pycache__/*

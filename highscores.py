@@ -1,15 +1,5 @@
 from common import print_back_to_menu, getChar
 
-def back_to_menu():
-        print_back_to_menu()
-        while True:
-            x = getChar(1)
-            if x == '\x1b':  # necessary option in order to not break the program
-                # when we press arrows 3 bits are loaded, not one like after pressing other keys
-                getChar(2)
-            elif x == '\n':
-                return
-
 def loading_highscore_file_into_list():
     highscore_list = []
     with open('highscores.txt', 'r') as highscores:
@@ -35,8 +25,9 @@ def add_highscore_to_file(nick, points):
         nick, points)
     with open('highscores.txt', 'w') as highscores:
         for i in sorted_highscore_list:
-            line = i[0] + " " + int(i[1])
+            line = i[0] + " " + str(i[1])
             highscores.write(line + '\n')
+
 
 def highscore_show():
     print("---PLACE-----NICK-------------SCORE-----\n")
@@ -47,6 +38,6 @@ def highscore_show():
               (19 - len(result[0])) * " " + str(round(float(result[1]), 3)))
         place_nr += 1
     print(" " + 79 * "_")
-    return back_to_menu()
+    return print_back_to_menu()
 
     

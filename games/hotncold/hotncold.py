@@ -38,7 +38,7 @@ class HotCold:
             hits -= 1
             if not answ.isdigit():
                 print('That\'s not number! ')
-            if int(answ) > self.random_numb:
+            elif int(answ) > self.random_numb:
                 print("Too high, you have", hits, "tries left!")
             elif int(answ) < self.random_numb:
                 print("To low, you have", hits, "tries left!")
