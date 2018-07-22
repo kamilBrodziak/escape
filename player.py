@@ -17,6 +17,14 @@ class Player:
         self.printing = Printing([20, 40], 61, "Stats")
         self.score = 0
 
+    def change_hunger(value):
+        self.hunger += value
+        if self.gamer.hunger > 100:
+            self.gamer.hunger = 100.0
+
+    def change_item_stat(self, item_type, value):
+        self.equiped[item_type] = value
+
     def char_create(self):
         cls()
         self.name = input("Enter your nick: \n")

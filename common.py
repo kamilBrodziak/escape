@@ -1,6 +1,6 @@
 import os
 import sys
-from termcolor import cprint
+from termcolor import cprint, colored
 
 
 class Printing:
@@ -28,7 +28,7 @@ class Printing:
                 cprint((" " + str(el) + " ").center(self.col_lengths[i], fillchar) + "|", "white", "on_grey",
                        attrs=["bold"], end="")
             else:
-                print((" " + str(el) + " ").center(self.col_lengths[i], fillchar) + "|", end="")
+                cprint((" " + str(el) + " ").center(self.col_lengths[i], fillchar) + "|", end="")
 
         print("")
         self.print_decor_cells(fillchar, col_amount)

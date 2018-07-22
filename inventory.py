@@ -14,35 +14,15 @@ class Inv:
         # dict which keys are types of item equiped, and values are list containing item
         self.temp_equiped = {}
 
-        self.filename = filename
+        with open(filename) as itemsfile:
+            self.itemslist = itemsfile.readlines()
+
         self.gamer = gamer
-        self.items_per_page = items_per_page
-        self.display_inv = DisplayInv(self.inventory, self.items_per_page, self.gamer.equiped, self.gamer)
+        self.items_per_page = items_per_page  # how much item displaying per page in inventory
+        self.display_inv = DisplayInv(self.inventory, self.items_per_page, self.temp_equiped, self.gamer)
         self.actual_pos = 0  # actual position of our cursor in inventory
         self.actual_page = 1
 
-    def add_rand(self, how_much):
-        # how_much - how much random generated item we want to add to inv
-        with open(self.filename) as filename:
-            items = filename.readlines()
-
-        for i in range(how_much):
-            item = random.choice(items)
-            item = item[:-1].split(";")  # separate string by ";" and delete "\n" ending
-            # item[0] - id, item[1] - what_it_is, 2 - value, 3 - name, 4 - description
-            # value - what value add for example to boots defence
-
-            # to know if item is in inventory already in order to increase value or add item to inv
-            # there is another value, item[5] - amount of items of this type
-            ids_list = [el[0] for el in self.inventory]
-            if item[0] in ids_list:
-                # need to create a list with elements of inv without the amount, in order to get index of item
-                inv_temp = [el[:-1] for el in self.inventory]
-                self.inventory[inv_temp.index(item)][5] += 1
-            else:
-                item.extend([1])  # adding amount to item
-                self.inventory.append(item)  # adding item to inventory
-                
     def run_inv(self):
         self.max_page = ceil(len(self.inventory) / self.items_per_page)
         char = ""  # key pressed
@@ -51,12 +31,12 @@ class Inv:
         while char.lower() != 'i':
             self.display_inv.print_table(self.actual_pos, self.actual_page, self.max_page)
             char = getChar(1)
-            if char == '\x1b':
+            if char == '\x1b':  # first bit of arrows
                 self.arrows_move()
             elif char == '\n':
                 self.use_item()
             elif char.lower() == 'e':
-                self.display_inv.equiped_show = False if self.display_inv.equiped_show else True
+                self.display_inv.show_hide_equiped()
 
     def arrows_move(self):
         char = getChar(2)
@@ -73,23 +53,20 @@ class Inv:
             self.actual_pos = (self.actual_page - 1) * self.items_per_page
 
     def use_item(self):
-        # value in inv - what value add to for example boots defence
+        # value in inv - what value add to for example to boots defence
         value = self.inventory[self.actual_pos][2]
         item_type = self.inventory[self.actual_pos][1]
 
         if self.inventory != {}:
             if item_type in self.gamer.equiped.keys():
                 self.equip(item_type, value)
-                self.display_inv.change_names_equiped(self.temp_equiped[item_type])
             elif item_type == "hunger":
-                self.gamer.hunger += float(value)
-                self.change_item_amount()
-                if self.gamer.hunger > 100:
-                    self.gamer.hunger = 100.0
+                self.gamer.change_hunger(float(value))
+            self.change_item_amount()
             self.gamer.update_stats()
 
     def equip(self, item_type, value):
-        # if we have something of this item_type equiped, take off it and add to inv
+        # if we have something of this item_type equiped, take it off and add to inv
         if self.gamer.equiped[item_type] != 0:
             self.add_item(self.temp_equiped[item_type])
 
@@ -97,8 +74,7 @@ class Inv:
         self.temp_equiped[item_type] = self.inventory[self.actual_pos][:-1]
 
         # add item stat to gamer stat
-        self.gamer.equiped[item_type] = int(value)
-        self.change_item_amount()
+        self.gamer.change_item_stat(item_type, int(value))
 
     def change_item_amount(self):
         self.inventory[self.actual_pos][5] -= 1
@@ -110,23 +86,38 @@ class Inv:
                 self.change_page_display()
 
     def change_page_display(self):
-        self.actual_pos -= 1
-        self.actual_page = ceil(self.actual_pos / self.items_per_page)
+        if self.actual_pos > 0:
+            self.actual_pos -= 1
+            if self.actual_pos % (self.items_per_page - 1) == 0:
+                self.actual_page = ceil(self.actual_pos / self.items_per_page)
 
         # if we were on actual_pos = 1, then upper equation will give actual_page = 0
         if self.actual_page == 0:
             self.actual_page = 1
         self.max_page = ceil(len(self.inventory) / self.items_per_page)
 
+    def add_rand(self, amount):
+        # amount - how much random generated item we want to add to inv
+
+        for i in range(amount):
+            item = random.choice(self.itemslist)
+            item = item[:-1].split(";")  # separate string by ";" and delete "\n" ending
+            # item[0] - id, item[1] - item type, 2 - value, 3 - name, 4 - description
+            # value - what value add for example to boots defence
+
+            ids_list = [el[0] for el in self.inventory]
+            self.add_item(item)
+
     def add_item(self, item):
         # to know if item is in list or not
         ids_list = [el[0] for el in self.inventory]
         if item[0] in ids_list:
+            # need to create a list with elements of inv without the amount, in order to get index of item
             inv_temp = [el[:-1] for el in self.inventory]
-            self.inventory[inv_temp.index(item)][5] += 1
+            self.inventory[inv_temp.index(item)][5] += 1  # item[5] - amount of items in inv
         else:
-            item.extend([1])
-            self.inventory.append(item)
+            item.extend([1])  # adding amount to item
+            self.inventory.append(item)  # adding item to inventory
 
 
 class DisplayInv:
@@ -136,15 +127,15 @@ class DisplayInv:
         self.title = 'Inventory'
         self.headings = ['Name', 'Description', 'Amount']
         self.items_per_page = items_per_page
-        self.names_equiped = {}
+        self.names_equiped = equiped
         self.col_lengths = [50, 40, 20]
         self.table_length = sum(self.col_lengths) + len(self.col_lengths) - 1  # without outer frames
-        self.stats = equiped
+        self.stats = gamer.equiped
         self.printing = Printing(self.col_lengths, self.table_length, self.title)
         self.equiped_show = False
 
-    def change_names_equiped(self, temp_equiped):
-        self.names_equiped[temp_equiped[1]] = temp_equiped[3]
+    def show_hide_equiped(self):
+        self.equiped_show = False if self.equiped_show else True
 
     def print_table(self, actual_pos, actual_page, max_page):
         cls()
@@ -159,7 +150,7 @@ class DisplayInv:
             row_ids = range((actual_page - 1) * self.items_per_page, len(self.inv))
 
         for row_id in row_ids:
-            fillchar = "O" if actual_pos == row_id else " "
+            fillchar = "█" if actual_pos == row_id else " "
             self.printing.print_row(self.inv[row_id][3:], fillchar)
         self.print_footer(actual_page, max_page)
 
@@ -188,7 +179,7 @@ class DisplayInv:
             cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
 
             for key in self.names_equiped:
-                string = key + ":  " + self.names_equiped[key]
+                string = key + ":  " + self.names_equiped[key][3]
                 print("| ", string.center(self.table_length - 3, " "), "|")
 
             cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
