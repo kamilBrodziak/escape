@@ -1,6 +1,7 @@
-import highscores
-from game import Gamestart
+from highscores import highscore_show
+from game import game_start
 from common import cls, Printing, print_back_to_menu
+from credit import credit
 
 
 class PrintingMenu:
@@ -96,26 +97,9 @@ class Menu:
             self.char = answer
 
 
-def credit():
-    cls()
-    creditsy = Printing([30, 50], 81, 'Who made this game')
-    creditsy.print_title()
-    creditsy.print_row(['Author name', 'Email'], header=True)
-    authors = [['Kamil Brodziak', 'Kamil98Brodziak@gmail.com'], ['Andrzej Rzeszut', '']]
-    for author in authors:
-        creditsy.print_row(author)
-    print_back_to_menu()
-
-
-def game_start():
-    cls()
-    game = Gamestart()
-    game.run_game()
-
-
 def main():
-    functions = [game_start, highscores.highscore_show, credit, exit]
-    menu = Menu("MENU", ['New game', 'Highscores', 'Credits', 'Exit Game'], 50, functions)
+    functions = [game_start, highscore_show, credit, exit]
+    menu = Menu("MENU", ['New game', 'Highscores', 'Credits & Info', 'Exit Game'], 50, functions)
     menu.run_menu()
 
 

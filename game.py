@@ -126,3 +126,9 @@ class Gamestart:
         with open("ascii/" + self.which_ending + ".txt") as screen:
             cprint(screen.read(), color, attrs=['bold'])
         time.sleep(2)
+
+
+def game_start():
+    cls()
+    game = Gamestart()
+    game.run_game()
