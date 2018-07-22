@@ -35,11 +35,11 @@ class Fight:
                     self.string = filename.read()
                 self.string = self.string.replace('[]', str(round(self.gamer.health, 2)) + (7 - len(str(round(self.gamer.health, 2)))) * " ", 1)
                 self.string = self.string.replace('[]', str(round(self.mob.health, 2)) + (5 - len(str(round(self.mob.health, 2)))) * " ", 1 )
-                self.string = self.string.replace('{}', self.chosen_q[0] + (86 - len(self.chosen_q[0])) * " " , 1)
-                self.string = self.string.replace('{}', self.chosen_q[2]['A'] + (22 - len(self.chosen_q[2]['A'])) * " " , 1)
-                self.string = self.string.replace('{}', self.chosen_q[2]['B'] + (24 - len(self.chosen_q[2]['B'])) * " " , 1)
-                self.string = self.string.replace('{}', self.chosen_q[2]['C'] + (22 - len(self.chosen_q[2]['C'])) * " " , 1)
-                self.string = self.string.replace('{}', self.chosen_q[2]['D'] + (24 - len(self.chosen_q[2]['D'])) * " " , 1)
+                self.string = self.string.replace('{}', self.chosen_q[0] + (86 - len(self.chosen_q[0])) * " ", 1)
+                self.string = self.string.replace('{}', self.chosen_q[2]['A'] + (22 - len(self.chosen_q[2]['A'])) * " ", 1)
+                self.string = self.string.replace('{}', self.chosen_q[2]['B'] + (24 - len(self.chosen_q[2]['B'])) * " ", 1)
+                self.string = self.string.replace('{}', self.chosen_q[2]['C'] + (22 - len(self.chosen_q[2]['C'])) * " ", 1)
+                self.string = self.string.replace('{}', self.chosen_q[2]['D'] + (24 - len(self.chosen_q[2]['D'])) * " ", 1)
 
                 cls()
 
@@ -55,27 +55,27 @@ class Fight:
                     break
 
             if ans == self.chosen_q[1]:
-                print ("Well done!  You hit your enemie!")
-                time.sleep (1.5)
+                print("Well done!  You hit your enemie!")
+                time.sleep(1.5)
                 self.gamer.attack_mob(self.mob)
-                time.sleep (1.5)
-            else: 
-                print ("Damn! You missed ")
-                time.sleep (1.5)
+                time.sleep(1.5)
+            else:
+                print("Damn! You missed ")
+                time.sleep(1.5)
 
             self.mob.attack_player(self.gamer)
-            time.sleep (1.5)
+            time.sleep(1.5)
 
             if self.mob.health <= 0:
-                print ("Enemie is Dead! Well done hero!")
+                print("Enemie is Dead! Well done hero!")
                 self.gamer.score += self.score
                 self.gamer.key = self.mob.have_key
-                time.sleep (1.5)
+                time.sleep(1.5)
                 self.gamer.health = 100
 
             elif self.gamer.health <= 0:
-                print ("Wow you are dead! Game over!")
-                time.sleep (1.5)
+                print("Wow you are dead! Game over!")
+                time.sleep(1.5)
 
 
 # x = Fight(100, 100, 5, 20)
