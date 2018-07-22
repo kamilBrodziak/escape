@@ -1,15 +1,10 @@
-kls 0
-
-kj 0
-lko 980
-
-ks 1000
-
-jss 1000
-
-kornica 3030
-
-janusz 3080
-
-OKO 3080
-
+kajko 3080
+fer 2080
+fer 2080
+fer 2080
+fer 2080
+fer 2080
+fer 2080
+fer 2080
+fer 2080
+fer 2080

@@ -3,52 +3,111 @@ import highscores
 from game import Gamestart
 
 
-def choose(option):
-    options_amount = 4
-    while True:
-        print_menu("MAIN MENU", "main", option)
-        char = getChar(1)
+class PrintingMenu:
+    def __init__(self, title, options_names, length, actual_pos):
+        self.title = title
+        self.options_names = options_names
+        self.length = length
+        self.actual_pos = actual_pos
+        self.rs = 10  # amount of spaces from right
+        self.diff = 8  # difference of spaces between title and options
+        self.change = 2  # difference of chosen option and other options
+    
+    def change_option(self, new_pos):
+        self.actual_pos = new_pos
 
-        if char == '\x1b':  # arrows movement in menu
-            char = getChar(2)
-            option = arrows_move_menu(option, options_amount, '[A', '[B', char)
-        
-        # moving in menu by pressing numbers on keyboard
-        elif char.isdigit() and int(char) > 0 and int(char) < options_amount + 1:
-            option = int(char)
-        
-        # choosing an option by enter
-        elif char == '\n':
-            if option == 1:
-                game = Gamestart()
-                game.run_game()
+    def print_menu(self):
+        self.cls()
+        self.print_title()
+        self.print_options()
+        self.print_footer()
 
-            elif option == 2:
-                cls()
-                highscores.highscore_show()
+    def print_title(self):
+        print((self.rs + 1) * " " + self.length * "_")
+        print(self.rs * " " + "█" + self.length * " " + "█")
+        print(self.rs * " " + "█" + self.title.center(self.length, " ") + "█")
+        print(self.rs * " " + "█" + self.length * "_" + "█")
+    
+    def print_options(self):
+        for i, option in enumerate(self.options_names):
+            self.print_option(option, i)
 
-            elif option == 3:
-                pass
+    def print_option(self, option, i):
+        if self.actual_pos == i:
+            change = self.change
+            fillchar = "█"
+        else:
+            change = 0
+            fillchar = "|"
+        lchange = self.rs + self.diff - change
+        rchange = self.diff * 2 - 2 * change
+        print((lchange + 1) * " " + (self.length - rchange) * "_")
+        print(lchange * " " + fillchar + (self.length - rchange) * " " + fillchar)
+        print(lchange * " " + fillchar + (" " + option + " ").center(self.length - rchange, " ") + fillchar)
+        print(lchange * " " + fillchar + (self.length - rchange) * "_" + fillchar)
+    
+    def print_footer(self):
+        print(self.rs * " " + "_" * self.length)
+    
+    def cls(self):  # clearing screen in terminal
+        import os
+        os.system("clear")
 
-            elif option == 4:
-                exit()
+
+class Menu:
+    def __init__(self, title, options_names, length, functions):
+        self.actual_pos = 0
+        self.options_names = options_names
+        self.display = PrintingMenu(title, options_names, length, self.actual_pos)
+        self.functions = functions
+
+    def run_menu(self):
+        while True:
+            self.display.print_menu()
+            self.getChar(1)
+            if self.char == "\x1b":
+                self.getChar(2)
+                self.arrows_move()
+            elif self.char == "\n":
+                self.functions[self.actual_pos]()
+
+    def arrows_move(self):
+        if self.char == '[A' and self.actual_pos > 0:
+            self.actual_pos -= 1
+        elif self.char == '[B' and self.actual_pos < len(self.options_names) - 1:
+            self.actual_pos += 1
+        self.display.change_option(self.actual_pos)
+
+    def getChar(self, bits):  # get tke pressed key from user
+        try:
+            import msvcrt
+            self.char = msvcrt.getch()
+        except ImportError:
+            import tty
+            import sys
+            import termios
+            fd = sys.stdin.fileno()
+            oldSettings = termios.tcgetattr(fd)
+            try:
+                tty.setcbreak(fd)
+                answer = sys.stdin.read(bits)
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, oldSettings)
+            self.char = answer
 
 
-def print_menu (title, which_menu, option, func1="", func2=""):
-    cls ()
-    with open("menu/" + which_menu + str(option) + '.txt', 'r') as option:
-        option = option.read()
+def credit():
+    pass
 
-    if which_menu == "menu" :
-        option = option.replace(r"{}", func1.center(32), 1).replace(r"{}", func2.center(32), 1)
-
-    print(option)
-
-
+def game_start():
+    cls()
+    game = Gamestart()
+    game.run_game()
 
 def main():
-    starting_position = 1  # on what option we want to have a cursor after start main.py
-    choose(starting_position)
+    functions = [game_start, highscores.highscore_show, credit, exit]
+    menu = Menu("MENU", ['New game', 'Highscores', 'Credits', 'Exit Game'], 50, functions)
+    menu.run_menu()
 
 
 if __name__ == '__main__':

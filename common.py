@@ -15,9 +15,10 @@ class Printing:
         cprint("|" + self.title.center(self.table_length, " ") + "|", 'white', 'on_grey', attrs=['bold'])
         cprint("|" + self.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])
 
-    def print_row(self, row, fillchar=" ", header=False):
+    def print_row(self, row, fillchar=" ", header=False, decors=True):
         col_amount = len(row)
-        self.print_decor_cells(fillchar, col_amount)
+        if decors:
+            self.print_decor_cells(fillchar, col_amount)
         if header:
             cprint("|", "white", "on_grey", attrs=['bold'], end="")
         else:
@@ -31,7 +32,8 @@ class Printing:
                 cprint((" " + str(el) + " ").center(self.col_lengths[i], fillchar) + "|", end="")
 
         print("")
-        self.print_decor_cells(fillchar, col_amount)
+        if decors:
+            self.print_decor_cells(fillchar, col_amount)
         self.print_decor_cells("-", col_amount)
 
     def print_decor_cells(self, fillchar, length):

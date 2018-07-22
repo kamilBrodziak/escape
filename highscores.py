@@ -1,13 +1,14 @@
-from common import print_back_to_menu, getChar
+from common import print_back_to_menu, getChar, Printing, cls
+
 
 def loading_highscore_file_into_list():
-    highscore_list = []
     with open('highscores.txt', 'r') as highscores:
-        for line in highscores:
-            one_score = line.split(" ", )
-            if line != "" and line != '\n' and line != " ":
-                highscore_list.append(one_score)
-    return highscore_list
+        highscores_list = highscores.readlines()
+    for i, score in enumerate(highscores_list):
+        score = score[:-1].split(" ")
+        score[1] = int(score[1])
+        highscores_list[i] = score
+    return highscores_list
 
 
 def highscore_add(name, score):
@@ -17,32 +18,30 @@ def highscore_add(name, score):
 
 def highscore_add_to_highscore_list(nick, points):
     highscore_list = loading_highscore_file_into_list()
-    highscore_list.append(
-        (nick, int(points)))
-    sorted_highscore_list = sorted(highscore_list, key=lambda x: float(x[1]))
-    if len(sorted_highscore_list) > 10:
-        sorted_highscore_list = sorted_highscore_list[:-1]
-    return sorted_highscore_list
+    highscore_list.append((nick, int(points)))
+    sorted_highscore_list = sorted(highscore_list, key=lambda x: int(x[1]), reverse=True)
+    return sorted_highscore_list[0:10]
 
 
 def add_highscore_to_file(nick, points):
-    sorted_highscore_list = highscore_add_to_highscore_list(
-        nick, points)
+    sorted_highscore_list = highscore_add_to_highscore_list(nick, points)
+    string = ""
+    for i in sorted_highscore_list:
+        string += i[0] + " " + str(i[1]) + "\n"
     with open('highscores.txt', 'w') as highscores:
-        for i in sorted_highscore_list:
-            line = i[0] + " " + str(i[1])
-            highscores.write(line + '\n')
+        highscores.write(string)
 
 
 def highscore_show():
-    print("---PLACE-----NICK-------------SCORE-----\n")
+    cls()
+    printing = Printing([10, 30, 40], 82, "TOP 10")
+    printing.print_title()
+    printing.print_row(['PLACE', 'NAME', 'SCORE'], header=True, decors=False)
+    add_highscore_to_file('fer', 2080)
     sorted_highscores = loading_highscore_file_into_list()
-    place_nr = 1
-    for result in sorted_highscores:
-        print(3 * " " + str(place_nr) + "." + (7 - len(str(place_nr))) * " " + result[0] +
-              (19 - len(result[0])) * " " + str(round(float(result[1]), 3)))
-        place_nr += 1
-    print(" " + 79 * "_")
-    return print_back_to_menu()
 
-    
+    for i, result in enumerate(sorted_highscores):
+        printing.print_row([i+1] + result, decors=False)
+
+    print("\\" + 82 * "_" + "/")
+    return print_back_to_menu()

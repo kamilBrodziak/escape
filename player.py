@@ -17,6 +17,10 @@ class Player:
         self.printing = Printing([20, 40], 61, "Stats")
         self.score = 0
 
+    def char_create(self):
+        cls()
+        self.name = input("Enter your nick: \n")
+
     def change_score(self, value):
         self.score += value
 
@@ -29,10 +33,6 @@ class Player:
     def change_item_stat(self, item_type, value):
         self.equiped[item_type] = value
         self.update_stats()
-
-    def char_create(self):
-        cls()
-        self.name = input("Enter your nick: \n")
 
     def update_stats(self):
         self.stats = {'defence': self.equiped['boots'] + self.equiped['chest'] + self.equiped['shoulder'] +
