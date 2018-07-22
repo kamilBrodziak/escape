@@ -65,18 +65,6 @@ def getChar(bits):  # get tke pressed key from user
         return answer
 
 
-def arrows_move_menu(option, max_, key1, key2, char, value_change=1, min_=1):  # moving in menu
-    if char == key1:
-        if option > min_:
-            option -= value_change
-
-    elif char == key2:
-        if option < max_:
-            option += value_change
-
-    return option
-
-
 def cls():  # clearing screen in terminal
         os.system("clear")
 

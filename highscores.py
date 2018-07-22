@@ -37,7 +37,6 @@ def highscore_show():
     printing = Printing([10, 30, 40], 82, "TOP 10")
     printing.print_title()
     printing.print_row(['PLACE', 'NAME', 'SCORE'], header=True, decors=False)
-    add_highscore_to_file('fer', 2080)
     sorted_highscores = loading_highscore_file_into_list()
 
     for i, result in enumerate(sorted_highscores):

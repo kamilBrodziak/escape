@@ -1,6 +1,6 @@
-from common import getChar, arrows_move_menu, cls
 import highscores
 from game import Gamestart
+from common import cls, Printing, print_back_to_menu
 
 
 class PrintingMenu:
@@ -12,7 +12,7 @@ class PrintingMenu:
         self.rs = 10  # amount of spaces from right
         self.diff = 8  # difference of spaces between title and options
         self.change = 2  # difference of chosen option and other options
-    
+
     def change_option(self, new_pos):
         self.actual_pos = new_pos
 
@@ -27,7 +27,7 @@ class PrintingMenu:
         print(self.rs * " " + "█" + self.length * " " + "█")
         print(self.rs * " " + "█" + self.title.center(self.length, " ") + "█")
         print(self.rs * " " + "█" + self.length * "_" + "█")
-    
+
     def print_options(self):
         for i, option in enumerate(self.options_names):
             self.print_option(option, i)
@@ -45,10 +45,10 @@ class PrintingMenu:
         print(lchange * " " + fillchar + (self.length - rchange) * " " + fillchar)
         print(lchange * " " + fillchar + (" " + option + " ").center(self.length - rchange, " ") + fillchar)
         print(lchange * " " + fillchar + (self.length - rchange) * "_" + fillchar)
-    
+
     def print_footer(self):
         print(self.rs * " " + "_" * self.length)
-    
+
     def cls(self):  # clearing screen in terminal
         import os
         os.system("clear")
@@ -78,7 +78,7 @@ class Menu:
             self.actual_pos += 1
         self.display.change_option(self.actual_pos)
 
-    def getChar(self, bits):  # get tke pressed key from user
+    def getChar(self, bits):  # get the pressed key from user
         try:
             import msvcrt
             self.char = msvcrt.getch()
@@ -97,12 +97,21 @@ class Menu:
 
 
 def credit():
-    pass
+    cls()
+    creditsy = Printing([30, 50], 81, 'Who made this game')
+    creditsy.print_title()
+    creditsy.print_row(['Author name', 'Email'], header=True)
+    authors = [['Kamil Brodziak', 'Kamil98Brodziak@gmail.com'], ['Andrzej Rzeszut', '']]
+    for author in authors:
+        creditsy.print_row(author)
+    print_back_to_menu()
+
 
 def game_start():
     cls()
     game = Gamestart()
     game.run_game()
+
 
 def main():
     functions = [game_start, highscores.highscore_show, credit, exit]
