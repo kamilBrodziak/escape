@@ -10,6 +10,11 @@ def loading_highscore_file_into_list():
     return highscore_list
 
 
+def highscore_add(name, score):
+    highscore_add_to_highscore_list(name, score)
+    add_highscore_to_file(name, score)
+
+
 def highscore_add_to_highscore_list(nick, points):
     highscore_list = loading_highscore_file_into_list()
     highscore_list.append(

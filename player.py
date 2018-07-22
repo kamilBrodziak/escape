@@ -17,13 +17,18 @@ class Player:
         self.printing = Printing([20, 40], 61, "Stats")
         self.score = 0
 
-    def change_hunger(value):
+    def change_score(self, value):
+        self.score += value
+
+    def change_hunger(self, value):
         self.hunger += value
-        if self.gamer.hunger > 100:
-            self.gamer.hunger = 100.0
+        if self.hunger > 100:
+            self.hunger = 100.0
+        self.update_stats()
 
     def change_item_stat(self, item_type, value):
         self.equiped[item_type] = value
+        self.update_stats()
 
     def char_create(self):
         cls()
@@ -54,6 +59,8 @@ class Player:
     def print_stats(self):
         self.printing.print_title()
         self.printing.print_row(["Stat", "Value"], header=True)
+
         for stat in self.stats:
             self.printing.print_row([stat, self.stats[stat]])
+
         cprint("|" + self.printing.table_length * "_" + "|", 'white', 'on_grey', attrs=['bold'])

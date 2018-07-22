@@ -63,7 +63,6 @@ class Inv:
             elif item_type == "hunger":
                 self.gamer.change_hunger(float(value))
             self.change_item_amount()
-            self.gamer.update_stats()
 
     def equip(self, item_type, value):
         # if we have something of this item_type equiped, take it off and add to inv
