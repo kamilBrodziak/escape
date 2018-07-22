@@ -66,7 +66,7 @@ def getChar(bits):  # get tke pressed key from user
 
 
 def cls():  # clearing screen in terminal
-        os.system("clear")
+    os.system("clear")
 
 
 def print_back_to_menu():
