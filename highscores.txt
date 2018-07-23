@@ -1,10 +1,7 @@
-kamil 30800
-jest 2080
-mistrzem 1080
-a 580
-andrzej 380
-ssie 200
-xd 100
+kamil 3080
+andrzej 2080
+test 1080
+michael 580
 aska 30
 andrzejxd 0
 baska 0
