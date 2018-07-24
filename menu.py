@@ -5,14 +5,16 @@ from credit import credit
 
 
 class PrintingMenu:
-    def __init__(self, title, options_names, length, actual_pos):
-        self.title = title
-        self.options_names = options_names
-        self.length = length
+    def __init__(self, menu_title, menu_options, menu_width, actual_pos):
+        self.menu_title = menu_title
+        self.menu_options = menu_options
+        self.menu_indentation = 10
+        self.option_indendation = 8
+        self.chosen_option_indendation = 6
+        self.menu_width = menu_width
+        self.option_width = menu_width - 2 * self.option_indendation
+        self.chosen_option_width = menu_width - 2 * self.chosen_option_indendation
         self.actual_pos = actual_pos
-        self.rs = 10  # amount of spaces from right
-        self.diff = 8  # difference of spaces between title and options
-        self.change = 2  # difference of chosen option and other options
 
     def change_option(self, new_pos):
         self.actual_pos = new_pos
@@ -24,31 +26,31 @@ class PrintingMenu:
         self.print_footer()
 
     def print_title(self):
-        print((self.rs + 1) * " " + self.length * "_")
-        print(self.rs * " " + "█" + self.length * " " + "█")
-        print(self.rs * " " + "█" + self.title.center(self.length, " ") + "█")
-        print(self.rs * " " + "█" + self.length * "_" + "█")
+        self.print_cell(self.menu_indentation, self.menu_width, "█", self.menu_title)
+
+    def print_cell(self, indendation, width, fillchar, title):
+        print((indendation + 1) * " " + width * "_")
+        print(indendation * " " + fillchar + width * " " + fillchar)
+        print(indendation * " " + fillchar + (" " + title + " ").center(width, " ") + fillchar)
+        print(indendation * " " + fillchar + width * "_" + fillchar)
 
     def print_options(self):
-        for i, option in enumerate(self.options_names):
-            self.print_option(option, i)
+        for i, option in enumerate(self.menu_options):
+            self.print_option(option[0], i)
 
     def print_option(self, option, i):
         if self.actual_pos == i:
-            change = self.change
+            width = self.chosen_option_width
+            indendation = self.chosen_option_indendation + self.menu_indentation
             fillchar = "█"
         else:
-            change = 0
+            width = self.option_width
+            indendation = self.option_indendation + self.menu_indentation
             fillchar = "|"
-        lchange = self.rs + self.diff - change
-        rchange = self.diff * 2 - 2 * change
-        print((lchange + 1) * " " + (self.length - rchange) * "_")
-        print(lchange * " " + fillchar + (self.length - rchange) * " " + fillchar)
-        print(lchange * " " + fillchar + (" " + option + " ").center(self.length - rchange, " ") + fillchar)
-        print(lchange * " " + fillchar + (self.length - rchange) * "_" + fillchar)
+        self.print_cell(indendation, width, fillchar, option)
 
     def print_footer(self):
-        print(self.rs * " " + "_" * self.length)
+        print(self.menu_indentation * " " + "_" * self.menu_width)
 
     def cls(self):  # clearing screen in terminal
         import os
@@ -56,11 +58,10 @@ class PrintingMenu:
 
 
 class Menu:
-    def __init__(self, title, options_names, length, functions):
+    def __init__(self, title, menu_width, menu_options):
         self.actual_pos = 0
-        self.options_names = options_names
-        self.display = PrintingMenu(title, options_names, length, self.actual_pos)
-        self.functions = functions
+        self.menu_options = menu_options  # list of lists, el[0] - name, el[1] - function name
+        self.display = PrintingMenu(title, menu_options, menu_width, self.actual_pos)
 
     def run_menu(self):
         while True:
@@ -70,12 +71,12 @@ class Menu:
                 self.getChar(2)
                 self.arrows_move()
             elif self.char == "\n":
-                self.functions[self.actual_pos]()
+                self.menu_options[self.actual_pos][1]()
 
     def arrows_move(self):
         if self.char == '[A' and self.actual_pos > 0:
             self.actual_pos -= 1
-        elif self.char == '[B' and self.actual_pos < len(self.options_names) - 1:
+        elif self.char == '[B' and self.actual_pos < len(self.menu_options) - 1:
             self.actual_pos += 1
         self.display.change_option(self.actual_pos)
 
@@ -98,8 +99,11 @@ class Menu:
 
 
 def main():
-    functions = [game_start, highscore_show, credit, exit]
-    menu = Menu("MENU", ['New game', 'Highscores', 'Credits & Info', 'Exit Game'], 50, functions)
+    menu_width = 50
+    menu_title = 'Menu'
+    menu_options = [['New game', game_start], ['Highscores', highscore_show],
+                    ['Credits & Info', credit], ['Exit', exit]]
+    menu = Menu(menu_title, menu_width, menu_options)
     menu.run_menu()
 
 
